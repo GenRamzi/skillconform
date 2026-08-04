@@ -4,6 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/GenRamzi/skillconform/actions/workflows/ci.yml"><img src="https://github.com/GenRamzi/skillconform/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.npmjs.com/package/skillconform"><img src="https://img.shields.io/npm/v/skillconform" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/skillconform"><img src="https://img.shields.io/npm/dm/skillconform" alt="npm downloads"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="Apache-2.0 license"></a>
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-compatible-6D5EF5" alt="Agent Skills compatible"></a>
 </p>
@@ -12,25 +14,38 @@
 
 Agent Skills are portable folders built around `SKILL.md`. The reference validator checks the core format; SkillConform adds a complementary quality layer for security review, workspace scanning, policy tests, CI, JSON, and SARIF.
 
-> Status: `v0.1.0` developer preview. The CLI is usable from source; the npm package will become available after the first public release.
+<p align="center">
+  <img src="docs/demo.svg" width="900" alt="SkillConform scanning seven Agent Skills and returning a clean pass">
+</p>
+
+> Status: `v0.1.0` developer preview. The CLI, library API, and GitHub Action are ready for early adopters. Security findings are evidence for review, not a certification.
 
 ## Quick start
+
+Run without installing globally:
+
+```bash
+npx skillconform check ./my-skill
+npx skillconform audit ./skills --fail-on warning
+```
+
+Generate machine-readable reports:
+
+```bash
+npx skillconform audit ./skills --format json -o skillconform.json
+npx skillconform audit ./skills --format sarif -o skillconform.sarif
+```
+
+For a guided walkthrough, follow the [five-minute demo](docs/quick-demo.md).
+
+To run from source:
 
 ```bash
 git clone https://github.com/GenRamzi/skillconform.git
 cd skillconform
 npm ci
 npm run build
-
-node dist/src/cli.js check ./path/to/my-skill
-node dist/src/cli.js audit ./path/to/my-skills --fail-on warning
-```
-
-After the npm release:
-
-```bash
-npx skillconform check ./my-skill
-npx skillconform audit ./skills --format sarif -o skillconform.sarif
+node dist/src/cli.js audit ./skills --fail-on warning
 ```
 
 ## Commands
@@ -73,7 +88,7 @@ See [the complete rule reference](docs/rules.md). Security findings are evidence
 Create a configuration:
 
 ```bash
-node dist/src/cli.js init
+npx skillconform init
 ```
 
 Then define expectations:
@@ -95,7 +110,7 @@ tests:
 Run it with:
 
 ```bash
-node dist/src/cli.js test skillconform.yaml
+npx skillconform test skillconform.yaml
 ```
 
 ## GitHub Action
@@ -116,14 +131,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: GenRamzi/skillconform@main
+      - uses: GenRamzi/skillconform@v0.1.0
         with:
           path: skills
           mode: audit
           fail-on: warning
 ```
 
-Pin the action to a version tag instead of `main` after the first stable release.
+Pin the action to a version tag or immutable commit SHA in maintained repositories.
 
 ## Library API
 
