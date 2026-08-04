@@ -1,6 +1,6 @@
 {
   "name": "skillconform",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Conformance, security, and regression testing for Agent Skills.",
   "type": "module",
   "bin": {
