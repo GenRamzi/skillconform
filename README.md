@@ -18,7 +18,7 @@ Agent Skills are portable folders built around `SKILL.md`. The reference validat
   <img src="docs/demo.svg" width="900" alt="SkillConform scanning seven Agent Skills and returning a clean pass">
 </p>
 
-> Status: `v0.1.0` developer preview. The CLI, library API, and GitHub Action are ready for early adopters. Security findings are evidence for review, not a certification.
+> Status: `v0.1.1` developer preview. The npm CLI, library API, and GitHub Action are ready for early adopters. Security findings are evidence for review, not a certification.
 
 ## Quick start
 
@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: GenRamzi/skillconform@v0.1.0
+      - uses: GenRamzi/skillconform@v0.1.1
         with:
           path: skills
           mode: audit
