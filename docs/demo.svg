@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">SkillConform terminal demonstration</title>
+  <desc id="desc">A terminal runs SkillConform against seven Agent Skills and reports a clean pass.</desc>
+  <rect width="1200" height="520" rx="28" fill="#0B1020"/>
+  <rect x="28" y="28" width="1144" height="464" rx="20" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <circle cx="68" cy="66" r="10" fill="#FB7185"/>
+  <circle cx="102" cy="66" r="10" fill="#FBBF24"/>
+  <circle cx="136" cy="66" r="10" fill="#34D399"/>
+  <text x="600" y="73" text-anchor="middle" fill="#94A3B8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20">skillconform — terminal</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26">
+    <text x="70" y="140" fill="#A78BFA">$</text>
+    <text x="105" y="140" fill="#F8FAFC">npx skillconform audit ./skills --fail-on warning</text>
+
+    <text x="70" y="205" fill="#F8FAFC" font-weight="700">SkillConform audit</text>
+    <text x="70" y="250" fill="#CBD5E1">Scanned 7 skills.</text>
+
+    <text x="70" y="330" fill="#CBD5E1">0 error(s), 0 warning(s), 0 note(s)</text>
+    <text x="70" y="388" fill="#60A5FA" font-weight="700">PASS</text>
+
+    <text x="70" y="452" fill="#64748B">Deterministic checks · no API key · CI-ready SARIF</text>
+  </g>
+
+  <path d="M1082 365l19 19 38-47" fill="none" stroke="#34D399" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1110" cy="365" r="70" fill="none" stroke="#34D399" stroke-width="5" opacity="0.45"/>
+</svg>
