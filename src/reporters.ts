@@ -63,7 +63,7 @@ function toSarif(result: ScanResult): Record<string, unknown> {
       tool: {
         driver: {
           name: "SkillConform",
-          version: "0.1.0",
+          version: "0.1.1",
           informationUri: "https://github.com/GenRamzi/skillconform",
           rules: [...rules.values()].map((item) => ({
             id: item.ruleId,
