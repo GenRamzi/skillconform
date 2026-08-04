@@ -1,0 +1,27 @@
+version: 1
+tests:
+  - name: valid fixture passes all checks
+    path: test/fixtures/valid-skill
+    mode: audit
+    expect:
+      errors: 0
+      warningsAtMost: 0
+  - name: invalid fixture exercises conformance rules
+    path: test/fixtures/invalid-skill
+    mode: check
+    expect:
+      includeRules:
+        - SC003
+        - SC004
+        - SC012
+        - SC018
+  - name: risky fixture exercises security rules
+    path: test/fixtures/risky-skill
+    mode: audit
+    expect:
+      includeRules:
+        - SEC001
+        - SEC002
+        - SEC003
+        - SEC004
+        - SEC005

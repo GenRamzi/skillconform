@@ -1,0 +1,4 @@
+interface:
+  display_name: "SkillConform"
+  short_description: "Validate and audit portable Agent Skills"
+  default_prompt: "Use $skillconform to audit these Agent Skills and repair actionable findings."

@@ -1,0 +1,64 @@
+{
+  "name": "skillconform",
+  "version": "0.1.0",
+  "description": "Conformance, security, and regression testing for Agent Skills.",
+  "type": "module",
+  "bin": {
+    "skillconform": "dist/src/cli.js"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "files": [
+    "dist/src",
+    "skills",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test dist/test/**/*.test.js",
+    "test:self": "npm run build && node dist/src/cli.js test skillconform.yaml",
+    "prepack": "npm run check && npm test"
+  },
+  "keywords": [
+    "agent-skills",
+    "ai-agents",
+    "skill-linter",
+    "claude-code",
+    "codex",
+    "security",
+    "sarif"
+  ],
+  "author": "Ramzi Sultan",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GenRamzi/skillconform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GenRamzi/skillconform/issues"
+  },
+  "homepage": "https://github.com/GenRamzi/skillconform#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2"
+  }
+}

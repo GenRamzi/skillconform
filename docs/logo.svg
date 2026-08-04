@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="280" viewBox="0 0 1120 280" role="img" aria-labelledby="title desc">
+  <title id="title">SkillConform</title>
+  <desc id="desc">A violet shield with a check mark beside the SkillConform wordmark.</desc>
+  <rect width="1120" height="280" rx="36" fill="#0B1020"/>
+  <path d="M82 62 172 34l90 28v62c0 65-35 104-90 126-55-22-90-61-90-126Z" fill="#6D5EF5"/>
+  <path d="m126 136 31 31 65-72" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="310" y="132" fill="#F8FAFC" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="72" font-weight="760" letter-spacing="-2">SkillConform</text>
+  <text x="313" y="186" fill="#AAB3C5" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="28">Test agent skills before agents trust them.</text>
+</svg>

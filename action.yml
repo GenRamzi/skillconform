@@ -1,0 +1,56 @@
+name: SkillConform
+description: Validate and security-audit Agent Skills in GitHub Actions.
+author: Ramzi Sultan
+branding:
+  icon: check-circle
+  color: purple
+inputs:
+  path:
+    description: Skill directory, SKILL.md, or workspace to scan.
+    required: false
+    default: .
+  mode:
+    description: Scan mode, either check or audit.
+    required: false
+    default: audit
+  fail-on:
+    description: Failure threshold, one of error, warning, note, or none.
+    required: false
+    default: error
+  format:
+    description: Report format, one of pretty, json, or sarif.
+    required: false
+    default: pretty
+  output:
+    description: Optional report path relative to the calling workspace.
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Install SkillConform
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci --ignore-scripts
+    - name: Build SkillConform
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm run build
+    - name: Scan Agent Skills
+      shell: bash
+      env:
+        SKILLCONFORM_TARGET: ${{ inputs.path }}
+        SKILLCONFORM_MODE: ${{ inputs.mode }}
+        SKILLCONFORM_FAIL_ON: ${{ inputs.fail-on }}
+        SKILLCONFORM_FORMAT: ${{ inputs.format }}
+        SKILLCONFORM_OUTPUT: ${{ inputs.output }}
+      run: |
+        case "$SKILLCONFORM_MODE" in check|audit) ;; *) echo "mode must be check or audit" >&2; exit 2 ;; esac
+        case "$SKILLCONFORM_FORMAT" in pretty|json|sarif) ;; *) echo "format must be pretty, json, or sarif" >&2; exit 2 ;; esac
+        case "$SKILLCONFORM_FAIL_ON" in error|warning|note|none) ;; *) echo "fail-on has an invalid value" >&2; exit 2 ;; esac
+
+        args=("$SKILLCONFORM_MODE" "$GITHUB_WORKSPACE/$SKILLCONFORM_TARGET" --format "$SKILLCONFORM_FORMAT" --fail-on "$SKILLCONFORM_FAIL_ON")
+        if [[ -n "$SKILLCONFORM_OUTPUT" ]]; then
+          args+=(--output "$GITHUB_WORKSPACE/$SKILLCONFORM_OUTPUT")
+        fi
+        node "$GITHUB_ACTION_PATH/dist/src/cli.js" "${args[@]}"
