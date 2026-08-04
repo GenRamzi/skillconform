@@ -46,7 +46,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: node dist/src/cli.js audit skills --format sarif --output skillconform.sarif
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: skillconform-sarif
           path: skillconform.sarif
