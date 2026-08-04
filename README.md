@@ -159,6 +159,12 @@ process.stdout.write(renderReport(result, "json"));
 
 Read [the architecture](docs/architecture.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
 
+## Community and launch resources
+
+- Test the tool and report a sanitized real-world result in [the early-adopter feedback issue](https://github.com/GenRamzi/skillconform/issues/10).
+- Use the [multi-channel launch kit](docs/launch-kit.md) for Show HN, Reddit, LinkedIn, X/Bluesky, and technical articles.
+- Keep demonstrations reproducible and free of credentials, private skills, customer content, or unsupported security claims.
+
 ## Scope and limitations
 
 SkillConform performs static and policy analysis. It does not execute untrusted skill scripts, prove semantic correctness, replace sandboxing, or certify a skill as secure. Review skills before granting filesystem, shell, network, or external-service access.
