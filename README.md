@@ -165,6 +165,14 @@ Read [the architecture](docs/architecture.md), [roadmap](ROADMAP.md), and [contr
 - Use the [multi-channel launch kit](docs/launch-kit.md) for Show HN, Reddit, LinkedIn, X/Bluesky, and technical articles.
 - Keep demonstrations reproducible and free of credentials, private skills, customer content, or unsupported security claims.
 
+## Ecosystem, adoption, and partnerships
+
+SkillConform is part of a two-project open-source stack. [Creative Agent Skills](https://github.com/GenRamzi/creative-agent-skills) provides reusable creative-production skills and audits its `skills/` directory with SkillConform in CI. This creates a public, reproducible integration rather than a standalone demo.
+
+For the problem statement, target users, differentiators, measurable adoption milestones, partnership paths, and due-diligence links, read the [project brief](docs/project-brief.md).
+
+The highest-value contributions now are independent integrations, minimized false-positive fixtures, missing-rule reports, compatibility tests, and public case studies.
+
 ## Scope and limitations
 
 SkillConform performs static and policy analysis. It does not execute untrusted skill scripts, prove semantic correctness, replace sandboxing, or certify a skill as secure. Review skills before granting filesystem, shell, network, or external-service access.
