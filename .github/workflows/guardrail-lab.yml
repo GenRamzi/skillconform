@@ -1,0 +1,28 @@
+name: Guardrail Lab
+
+on:
+  pull_request:
+    paths:
+      - "labs/guardrail-lab/**"
+      - ".github/workflows/guardrail-lab.yml"
+  push:
+    branches: [main]
+    paths:
+      - "labs/guardrail-lab/**"
+      - ".github/workflows/guardrail-lab.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate cases
+        run: python labs/guardrail-lab/guardrail_lab.py validate
+      - name: Run unit tests
+        run: python -m unittest discover -s labs/guardrail-lab/tests -v
