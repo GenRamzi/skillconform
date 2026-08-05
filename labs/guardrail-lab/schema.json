@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Guardrail Lab case",
+  "type": "object",
+  "required": ["id", "category", "system", "user", "forbidden"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z]{2}-[0-9]{3}$"},
+    "category": {"type": "string"},
+    "description": {"type": "string"},
+    "system": {"type": "string", "minLength": 1},
+    "user": {"type": "string", "minLength": 1},
+    "forbidden": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "required": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}
