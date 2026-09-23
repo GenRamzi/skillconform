@@ -1,0 +1,46 @@
+name: Compatibility profile or fixture
+description: Propose a documented Agent Skills host behavior, profile, or compatibility fixture.
+title: "[Compatibility] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make cross-agent compatibility evidence more accurate. Provider-specific claims must be backed by first-party documentation.
+  - type: input
+    id: host
+    attributes:
+      label: Agent host or runtime
+      placeholder: GitHub Copilot, OpenCode, Cursor, ...
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: First-party documentation URL
+      description: Link to the provider's own documentation for the proposed behavior.
+      placeholder: https://...
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Documented behavior
+      description: State the smallest behavior or constraint that SkillConform should encode.
+    validations:
+      required: true
+  - type: textarea
+    id: fixtures
+    attributes:
+      label: Proposed fixtures
+      description: Describe a minimal passing/review fixture and, when applicable, an unsupported fixture.
+    validations:
+      required: true
+  - type: checkboxes
+    id: integrity
+    attributes:
+      label: Evidence checklist
+      options:
+        - label: I am not inferring unpublished provider behavior.
+          required: true
+        - label: I can contribute or help validate a reproducible fixture/test.
+          required: true
