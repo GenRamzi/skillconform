@@ -1,7 +1,7 @@
 {
   "name": "skillconform",
-  "version": "0.1.1",
-  "description": "Conformance, security, and regression testing for Agent Skills.",
+  "version": "0.2.0",
+  "description": "CI-native conformance, capability inventory, security review, and regression testing for Agent Skills.",
   "type": "module",
   "bin": {
     "skillconform": "dist/src/cli.js"
