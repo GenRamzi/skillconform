@@ -22,7 +22,9 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event_name != 'issues' || (github.actor == 'GenRamzi' && github.event.issue.title == 'release: skillconform 0.3.0')
+    if: >-
+      github.event_name != 'issues' ||
+      (github.actor == 'GenRamzi' && github.event.issue.title == 'release: skillconform 0.3.0')
     name: Publish version and create release
     runs-on: ubuntu-latest
     steps:
