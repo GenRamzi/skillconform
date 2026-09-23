@@ -11,6 +11,7 @@ export function buildCapabilityInventory(targetInput: string): CapabilityInvento
   const target = resolve(targetInput);
   const skillFiles = discoverSkillFiles(target);
   return {
+    schemaVersion: "skillconform.capabilities/v1",
     target: normalizePath(target),
     skillCount: skillFiles.length,
     skills: skillFiles.map(profileSkill),
