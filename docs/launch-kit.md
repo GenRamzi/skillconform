@@ -65,11 +65,11 @@ The project is early, so reports from real repositories are more useful than sta
 
 ## LinkedIn draft
 
-I have released **SkillConform v0.1.1**, an open-source quality and security tool for portable Agent Skills.
+I have released **SkillConform v0.3.0**, an open-source quality, conformance, capability, compatibility, and security tool for portable Agent Skills.
 
 Agent Skills are easy to share, but a `SKILL.md` folder can also contain broken references, credentials, risky shell instructions, excessive permissions, and policy regressions. SkillConform adds deterministic checks, stable rule IDs, regression expectations, GitHub Actions integration, and SARIF output without requiring an API key or executing the inspected scripts.
 
-The first release is available as an npm CLI and GitHub Action. I am inviting maintainers to test it against real skill repositories and report false positives, missing rules, and integration gaps.
+The release is available as an npm CLI and GitHub Action. I am inviting maintainers to test it against real skill repositories and report false positives, missing rules, compatibility gaps, and integration needs.
 
 ## X / Bluesky thread
 

@@ -30,4 +30,4 @@ The workflow re-runs type checks, tests, self-tests, a warning-level audit of th
 
 ## Why the workflow changed
 
-The September 23, 2026 `0.3.0` release attempts passed all repository validation and failed only at token-authenticated `npm publish`. Trusted publishing removes the long-lived token dependency and binds publishing to this repository and workflow.
+The September 23, 2026 `0.3.0` release attempts initially passed all repository validation and failed only at token-authenticated `npm publish`. After the npm trusted publisher was configured, `v0.3.0` published successfully through GitHub OIDC with provenance and a matching GitHub Release. The permanent workflow now keeps only tag and explicit manual-dispatch release paths.
