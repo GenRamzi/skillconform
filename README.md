@@ -18,7 +18,7 @@ Agent Skills are portable folders built around `SKILL.md`. The reference validat
   <img src="docs/demo.svg" width="900" alt="SkillConform scanning seven Agent Skills and returning a clean pass">
 </p>
 
-> Status: `v0.3.0` development line on `main`. The CLI, library API, and GitHub Action are ready for early adopters; published registry releases may lag `main`. Static compatibility and security results are evidence for review, not runtime certification.
+> Status: `v0.4.0` development line on `main`. The CLI, library API, and GitHub Action are ready for early adopters; published registry releases may lag `main`. Static compatibility and security results are evidence for review, not runtime certification.
 
 ## Quick start
 
@@ -54,6 +54,15 @@ npx skillconform matrix ./skills --format json -o compatibility.json
 
 The versioned `skillconform.compatibility/v1` matrix starts with Agent Skills, Claude Code, Claude API, OpenAI Skills, and Gemini CLI profiles. `PASS` means no static blocker was found, `REVIEW` means runtime/host evidence is still needed, and `UNSUPPORTED` means a documented constraint is contradicted. See [cross-agent compatibility profiles](docs/compatibility.md).
 
+Gate a pull request against a baseline without executing target scripts:
+
+```bash
+npx skillconform regress ./candidate/skills --baseline ./baseline/skills
+npx skillconform regress ./candidate/skills --baseline ./baseline/skills --fail-on warning
+```
+
+The versioned `skillconform.regression/v1` report detects newly introduced findings and trust-surface expansion such as network, shell, bundled scripts, tool permissions, and hosts. See [baseline-to-candidate regression](docs/regression.md).
+
 For a guided walkthrough, follow the [five-minute demo](docs/quick-demo.md).
 
 To run from source:
@@ -74,6 +83,7 @@ node dist/src/cli.js audit ./skills --fail-on warning
 | `audit [path]` | Run conformance checks plus deterministic security rules. |
 | `inventory [path]` | Produce a deterministic capability/portability inventory. |
 | `matrix [path]` | Compare static evidence with versioned host compatibility profiles. |
+| `regress [candidate] --baseline <path>` | Compare a candidate tree against a baseline and gate trust-surface regressions. |
 | `test [file]` | Execute regression expectations from `skillconform.yaml`. |
 | `init [file]` | Create a starter policy-test configuration. |
 
@@ -158,7 +168,7 @@ jobs:
           fail-on: warning
 ```
 
-Pin the action to a version tag or immutable commit SHA in maintained repositories.
+Pin the action to a version tag or immutable commit SHA in maintained repositories. Release automation uses npm Trusted Publishing; maintainers should review [the release setup](docs/release.md) before publishing a new version.
 
 ## Library API
 
@@ -177,7 +187,7 @@ process.stdout.write(renderReport(result, "json"));
 - **CI-native:** reports work in terminals, scripts, and SARIF consumers.
 - **Least privilege:** security rules favor explicit tools, paths, and network requirements.
 
-Read [the architecture](docs/architecture.md), [cross-agent compatibility profiles](docs/compatibility.md), [SkillConform 2.0 direction](docs/skillconform-2.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
+Read [the architecture](docs/architecture.md), [baseline-to-candidate regression](docs/regression.md), [cross-agent compatibility profiles](docs/compatibility.md), [SkillConform 2.0 direction](docs/skillconform-2.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
 
 ## Community and launch resources
 

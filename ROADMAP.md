@@ -23,11 +23,12 @@ SkillConform is evolving toward an open-source CI and test suite for Agent Skill
 
 ## v0.4 — Behavioral regression
 
-- Versioned evaluation manifest.
-- Baseline-versus-candidate skill comparisons.
-- Deterministic assertions before optional model-based judges.
-- Reproducible agent CLI adapters with explicit sandbox and permission contracts.
-- Machine-readable evaluation evidence suitable for pull requests.
+- [x] `skillconform.regression/v1` baseline-versus-candidate evidence contract.
+- [x] Deterministic PR gate for new findings and capability expansion.
+- [x] `regress` CLI, TypeScript API, GitHub Action mode, and side-by-side checkout guidance.
+- [ ] Versioned live-evaluation manifest for task-level assertions.
+- [ ] Reproducible agent CLI adapters with explicit sandbox and permission contracts.
+- [ ] Optional runtime evidence that remains separate from deterministic static results.
 
 ## v0.5 — Supply chain and ecosystem
 

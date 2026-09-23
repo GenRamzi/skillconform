@@ -47,9 +47,13 @@ function profileSkill(skillFile: string): SkillCapabilityProfile {
     } catch {
       continue;
     }
-    for (const match of content.matchAll(/https?:\/\/([^\s"'<>\])}]+)/gi)) {
+    for (const match of content.matchAll(/https?:\/\/[^\s"'<>\])}]+/gi)) {
       network = true;
-      if (match[1]) networkHosts.add(match[1].toLowerCase());
+      try {
+        networkHosts.add(new URL(match[0]).hostname.toLowerCase());
+      } catch {
+        // Invalid URL-like text still counts as a network signal, but not as a host.
+      }
     }
     if (/\b(?:curl|wget|fetch)\b/i.test(content)) network = true;
     if (/\b(?:bash|sh|zsh|pwsh|powershell)\b/i.test(content)) shell = true;

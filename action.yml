@@ -1,5 +1,5 @@
 name: SkillConform
-description: Validate, inventory, compare host compatibility, and security-audit Agent Skills in GitHub Actions.
+description: Validate, inventory, compare compatibility, regression-gate, and security-audit Agent Skills in GitHub Actions.
 author: Ramzi Sultan
 branding:
   icon: check-circle
@@ -10,9 +10,13 @@ inputs:
     required: false
     default: .
   mode:
-    description: Mode: check, audit, inventory, or matrix.
+    description: Mode: check, audit, inventory, matrix, or regress.
     required: false
     default: audit
+  baseline:
+    description: Baseline path relative to the workspace. Required when mode is regress.
+    required: false
+    default: ""
   fail-on:
     description: Failure threshold, one of error, warning, note, or none.
     required: false
@@ -41,19 +45,27 @@ runs:
       env:
         SKILLCONFORM_TARGET: ${{ inputs.path }}
         SKILLCONFORM_MODE: ${{ inputs.mode }}
+        SKILLCONFORM_BASELINE: ${{ inputs.baseline }}
         SKILLCONFORM_FAIL_ON: ${{ inputs.fail-on }}
         SKILLCONFORM_FORMAT: ${{ inputs.format }}
         SKILLCONFORM_OUTPUT: ${{ inputs.output }}
       run: |
-        case "$SKILLCONFORM_MODE" in check|audit|inventory|matrix) ;; *) echo "mode must be check, audit, inventory, or matrix" >&2; exit 2 ;; esac
+        case "$SKILLCONFORM_MODE" in check|audit|inventory|matrix|regress) ;; *) echo "mode must be check, audit, inventory, matrix, or regress" >&2; exit 2 ;; esac
         case "$SKILLCONFORM_FORMAT" in pretty|json|sarif) ;; *) echo "format must be pretty, json, or sarif" >&2; exit 2 ;; esac
-        if [[ ( "$SKILLCONFORM_MODE" == "inventory" || "$SKILLCONFORM_MODE" == "matrix" ) && "$SKILLCONFORM_FORMAT" == "sarif" ]]; then
+        if [[ ( "$SKILLCONFORM_MODE" == "inventory" || "$SKILLCONFORM_MODE" == "matrix" || "$SKILLCONFORM_MODE" == "regress" ) && "$SKILLCONFORM_FORMAT" == "sarif" ]]; then
           echo "$SKILLCONFORM_MODE mode supports pretty or json format" >&2
           exit 2
         fi
         case "$SKILLCONFORM_FAIL_ON" in error|warning|note|none) ;; *) echo "fail-on has an invalid value" >&2; exit 2 ;; esac
 
         args=("$SKILLCONFORM_MODE" "$GITHUB_WORKSPACE/$SKILLCONFORM_TARGET" --format "$SKILLCONFORM_FORMAT" --fail-on "$SKILLCONFORM_FAIL_ON")
+        if [[ "$SKILLCONFORM_MODE" == "regress" ]]; then
+          if [[ -z "$SKILLCONFORM_BASELINE" ]]; then
+            echo "baseline input is required for regress mode" >&2
+            exit 2
+          fi
+          args+=(--baseline "$GITHUB_WORKSPACE/$SKILLCONFORM_BASELINE")
+        fi
         if [[ -n "$SKILLCONFORM_OUTPUT" ]]; then
           args+=(--output "$GITHUB_WORKSPACE/$SKILLCONFORM_OUTPUT")
         fi
