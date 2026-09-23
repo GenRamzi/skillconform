@@ -37,6 +37,29 @@ export interface ScanResult {
   summary: ScanSummary;
 }
 
+export interface SkillCapabilityProfile {
+  skillFile: string;
+  name?: string;
+  compatibility?: string;
+  allowedTools: string[];
+  references: string[];
+  scripts: string[];
+  networkHosts: string[];
+  capabilities: {
+    network: boolean;
+    shell: boolean;
+    bundledScripts: boolean;
+  };
+  portabilityNotes: string[];
+}
+
+export interface CapabilityInventory {
+  schemaVersion: "skillconform.capabilities/v1";
+  target: string;
+  skillCount: number;
+  skills: SkillCapabilityProfile[];
+}
+
 export interface CliOptions {
   format: OutputFormat;
   output?: string;
