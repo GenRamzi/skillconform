@@ -1,0 +1,40 @@
+name: Regression fixture or detector
+description: Propose a baseline-to-candidate regression case with deterministic evidence.
+title: "[Regression] "
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Baseline → candidate scenario
+      description: Describe the smallest change that should be surfaced by the regression gate.
+    validations:
+      required: true
+  - type: dropdown
+    id: class
+    attributes:
+      label: Change class
+      options:
+        - New finding
+        - Network capability
+        - Shell capability
+        - Tool permission expansion
+        - Bundled script
+        - Network host
+        - Added or removed skill
+        - Other deterministic trust-surface change
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Include expected severity and why it is reviewable evidence rather than an accusation.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safe
+    attributes:
+      label: Fixture safety
+      options:
+        - label: The fixture can be public and contains no credentials, customer data, or proprietary content.
+          required: true
