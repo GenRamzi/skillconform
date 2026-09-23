@@ -10,7 +10,7 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-compatible-6D5EF5" alt="Agent Skills compatible"></a>
 </p>
 
-**SkillConform is the open-source CI and test suite for Agent Skills: conformance, capability inventory, deterministic security review, and regression testing.** It catches broken metadata, unsafe instructions, missing resources, embedded secrets, broad tool grants, and policy regressions before a skill reaches an agent.
+**SkillConform is the open-source CI and test suite for Agent Skills: conformance, capability inventory, cross-agent compatibility evidence, deterministic security review, and regression testing.** It catches broken metadata, unsafe instructions, missing resources, embedded secrets, broad tool grants, and policy regressions before a skill reaches an agent.
 
 Agent Skills are portable folders built around `SKILL.md`. The reference validator checks the core format; SkillConform adds a complementary quality layer for security review, workspace scanning, policy tests, CI, JSON, and SARIF.
 
@@ -18,7 +18,7 @@ Agent Skills are portable folders built around `SKILL.md`. The reference validat
   <img src="docs/demo.svg" width="900" alt="SkillConform scanning seven Agent Skills and returning a clean pass">
 </p>
 
-> Status: `v0.1.1` developer preview. The npm CLI, library API, and GitHub Action are ready for early adopters. Security findings are evidence for review, not a certification.
+> Status: `v0.3.0` development line on `main`. The CLI, library API, and GitHub Action are ready for early adopters; published registry releases may lag `main`. Static compatibility and security results are evidence for review, not runtime certification.
 
 ## Quick start
 
@@ -45,6 +45,15 @@ npx skillconform inventory ./skills --format json -o capabilities.json
 
 The versioned `skillconform.capabilities/v1` document records declared tools, local references, bundled scripts, detected network hosts, shell/network signals, and portability notes. It is evidence for review and CI policy—not a claim that a skill is safe or compatible with every agent.
 
+Compare the same skill against documented host constraints:
+
+```bash
+npx skillconform matrix ./skills
+npx skillconform matrix ./skills --format json -o compatibility.json
+```
+
+The versioned `skillconform.compatibility/v1` matrix starts with Agent Skills, Claude Code, Claude API, OpenAI Skills, and Gemini CLI profiles. `PASS` means no static blocker was found, `REVIEW` means runtime/host evidence is still needed, and `UNSUPPORTED` means a documented constraint is contradicted. See [cross-agent compatibility profiles](docs/compatibility.md).
+
 For a guided walkthrough, follow the [five-minute demo](docs/quick-demo.md).
 
 To run from source:
@@ -64,6 +73,7 @@ node dist/src/cli.js audit ./skills --fail-on warning
 | `check [path]` | Validate Agent Skills structure, metadata, naming, size, and references. |
 | `audit [path]` | Run conformance checks plus deterministic security rules. |
 | `inventory [path]` | Produce a deterministic capability/portability inventory. |
+| `matrix [path]` | Compare static evidence with versioned host compatibility profiles. |
 | `test [file]` | Execute regression expectations from `skillconform.yaml`. |
 | `init [file]` | Create a starter policy-test configuration. |
 
@@ -167,7 +177,7 @@ process.stdout.write(renderReport(result, "json"));
 - **CI-native:** reports work in terminals, scripts, and SARIF consumers.
 - **Least privilege:** security rules favor explicit tools, paths, and network requirements.
 
-Read [the architecture](docs/architecture.md), [SkillConform 2.0 direction](docs/skillconform-2.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
+Read [the architecture](docs/architecture.md), [cross-agent compatibility profiles](docs/compatibility.md), [SkillConform 2.0 direction](docs/skillconform-2.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
 
 ## Community and launch resources
 

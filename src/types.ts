@@ -60,6 +60,46 @@ export interface CapabilityInventory {
   skills: SkillCapabilityProfile[];
 }
 
+export type CompatibilityStatus = "pass" | "review" | "unsupported";
+export type NetworkPolicy = "full" | "none" | "host-defined";
+export type RuntimePackageInstall = "allowed" | "none" | "discouraged" | "host-defined";
+
+export interface CompatibilityProfile {
+  id: "agent-skills" | "claude-code" | "claude-api" | "openai-skills" | "gemini-cli";
+  label: string;
+  source: string;
+  networkPolicy: NetworkPolicy;
+  runtimePackageInstall: RuntimePackageInstall;
+  discoveryPattern: string | null;
+  notes: string;
+}
+
+export interface CompatibilityCheck {
+  id: string;
+  status: CompatibilityStatus;
+  reason: string;
+}
+
+export interface CompatibilityResult {
+  profileId: CompatibilityProfile["id"];
+  status: CompatibilityStatus;
+  checks: CompatibilityCheck[];
+}
+
+export interface SkillCompatibilityResult {
+  skillFile: string;
+  name?: string;
+  results: CompatibilityResult[];
+}
+
+export interface CompatibilityMatrix {
+  schemaVersion: "skillconform.compatibility/v1";
+  profileSetVersion: string;
+  target: string;
+  profiles: CompatibilityProfile[];
+  skills: SkillCompatibilityResult[];
+}
+
 export interface CliOptions {
   format: OutputFormat;
   output?: string;

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import { resolve } from "node:path";
+import { buildCompatibilityMatrix, renderCompatibilityMatrix } from "./compatibility.js";
 import { buildCapabilityInventory, renderCapabilityInventory } from "./inventory.js";
 import { createPolicyConfig, runPolicyTests } from "./policy-tests.js";
 import { renderReport, shouldFail, writeReport } from "./reporters.js";
 import { scanTarget } from "./scanner.js";
 import type { CliOptions, OutputFormat, Severity } from "./types.js";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 
 interface ParsedArguments {
   command: string;
@@ -48,6 +49,13 @@ async function main(): Promise<void> {
       return;
     }
 
+    if (parsed.command === "matrix") {
+      if (parsed.options.format === "sarif") throw new Error("The matrix command supports pretty or json output.");
+      const matrix = buildCompatibilityMatrix(parsed.target);
+      writeReport(renderCompatibilityMatrix(matrix, parsed.options.format), parsed.options.output);
+      return;
+    }
+
     const mode = parsed.command === "audit" ? "audit" : "check";
     const result = scanTarget(parsed.target, mode);
     if (!parsed.options.quiet || parsed.options.output) {
@@ -66,7 +74,7 @@ function parseArguments(args: string[]): ParsedArguments {
   if (args.includes("--version") || args.includes("-v")) return { command: "version", target: ".", options: defaults() };
 
   const command = args[0] ?? "help";
-  if (!["check", "audit", "inventory", "test", "init"].includes(command)) throw new Error(`Unknown command '${command}'. Run skillconform --help.`);
+  if (!["check", "audit", "inventory", "matrix", "test", "init"].includes(command)) throw new Error(`Unknown command '${command}'. Run skillconform --help.`);
   let target = command === "test" ? "skillconform.yaml" : ".";
   const options = defaults();
 
@@ -76,7 +84,7 @@ function parseArguments(args: string[]): ParsedArguments {
     if (arg === "--format") {
       const value = args[++index];
       if (value !== "pretty" && value !== "json" && value !== "sarif") throw new Error("--format must be pretty, json, or sarif.");
-      if ((command === "test" || command === "inventory") && value === "sarif") throw new Error(`The ${command} command supports pretty or json output.`);
+      if ((command === "test" || command === "inventory" || command === "matrix") && value === "sarif") throw new Error(`The ${command} command supports pretty or json output.`);
       options.format = value as OutputFormat;
     } else if (arg === "--output" || arg === "-o") {
       const value = args[++index];

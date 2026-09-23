@@ -8,17 +8,18 @@ SkillConform is evolving toward an open-source CI and test suite for Agent Skill
 - [x] CLI and TypeScript API for capability inventory.
 - [x] Deterministic inventory of declared tools, references, bundled scripts, network hosts, and portability notes.
 - [ ] JSON Schema for capability inventory and `skillconform.yaml`.
-- [ ] Explicit client compatibility profiles.
+- [x] Explicit client compatibility profiles.
 - [ ] Configurable rule severities and documented suppressions.
 - [ ] Incremental scanning for large repositories.
 
 ## v0.3 — Cross-agent compatibility
 
-- Compatibility adapters for major Agent Skills hosts.
-- `matrix` command with tested / untested / unsupported evidence per profile.
-- Community-maintained compatibility fixtures.
-- Shell and PowerShell command-aware analysis.
-- Reusable CI examples for multi-agent skill repositories.
+- [x] Versioned compatibility profiles for Agent Skills, Claude Code, Claude API, OpenAI Skills, and Gemini CLI.
+- [x] `skillconform.compatibility/v1` matrix with pass / review / unsupported evidence.
+- [x] `matrix` CLI, TypeScript API, GitHub Action mode, and provider-specific fixtures.
+- [ ] Community-maintained compatibility fixtures.
+- [ ] Shell and PowerShell command-aware analysis.
+- [ ] Reusable CI examples for multi-agent skill repositories.
 
 ## v0.4 — Behavioral regression
 
