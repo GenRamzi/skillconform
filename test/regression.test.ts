@@ -22,6 +22,9 @@ test("detects capability expansion and new findings", () => {
   assert.ok(codes.has("REG011"));
   assert.ok(codes.has("REG013"));
   assert.ok(codes.has("REG001"));
+  const hostChange = result.changes.find((item) => item.code === "REG014");
+  assert.equal(hostChange?.message.includes("example.com"), true);
+  assert.equal(hostChange?.message.includes("example.com/context"), false);
   assert.equal(result.summary.warnings > 0, true);
   assert.equal(shouldFailRegression(result, "warning"), true);
 });
