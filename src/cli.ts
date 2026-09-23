@@ -3,11 +3,12 @@ import { resolve } from "node:path";
 import { buildCompatibilityMatrix, renderCompatibilityMatrix } from "./compatibility.js";
 import { buildCapabilityInventory, renderCapabilityInventory } from "./inventory.js";
 import { createPolicyConfig, runPolicyTests } from "./policy-tests.js";
+import { compareSkillTargets, renderRegressionReport, shouldFailRegression } from "./regression.js";
 import { renderReport, shouldFail, writeReport } from "./reporters.js";
 import { scanTarget } from "./scanner.js";
 import type { CliOptions, OutputFormat, Severity } from "./types.js";
 
-const VERSION = "0.3.0";
+const VERSION = "0.4.0";
 
 interface ParsedArguments {
   command: string;
@@ -56,6 +57,15 @@ async function main(): Promise<void> {
       return;
     }
 
+    if (parsed.command === "regress") {
+      if (parsed.options.format === "sarif") throw new Error("The regress command supports pretty or json output.");
+      if (!parsed.options.baseline) throw new Error("The regress command requires --baseline <path>.");
+      const report = compareSkillTargets(parsed.options.baseline, parsed.target);
+      writeReport(renderRegressionReport(report, parsed.options.format), parsed.options.output);
+      process.exitCode = shouldFailRegression(report, parsed.options.failOn) ? 1 : 0;
+      return;
+    }
+
     const mode = parsed.command === "audit" ? "audit" : "check";
     const result = scanTarget(parsed.target, mode);
     if (!parsed.options.quiet || parsed.options.output) {
@@ -74,7 +84,7 @@ function parseArguments(args: string[]): ParsedArguments {
   if (args.includes("--version") || args.includes("-v")) return { command: "version", target: ".", options: defaults() };
 
   const command = args[0] ?? "help";
-  if (!["check", "audit", "inventory", "matrix", "test", "init"].includes(command)) throw new Error(`Unknown command '${command}'. Run skillconform --help.`);
+  if (!["check", "audit", "inventory", "matrix", "regress", "test", "init"].includes(command)) throw new Error(`Unknown command '${command}'. Run skillconform --help.`);
   let target = command === "test" ? "skillconform.yaml" : ".";
   const options = defaults();
 
@@ -84,12 +94,16 @@ function parseArguments(args: string[]): ParsedArguments {
     if (arg === "--format") {
       const value = args[++index];
       if (value !== "pretty" && value !== "json" && value !== "sarif") throw new Error("--format must be pretty, json, or sarif.");
-      if ((command === "test" || command === "inventory" || command === "matrix") && value === "sarif") throw new Error(`The ${command} command supports pretty or json output.`);
+      if ((command === "test" || command === "inventory" || command === "matrix" || command === "regress") && value === "sarif") throw new Error(`The ${command} command supports pretty or json output.`);
       options.format = value as OutputFormat;
     } else if (arg === "--output" || arg === "-o") {
       const value = args[++index];
       if (!value) throw new Error(`${arg} requires a file path.`);
       options.output = value;
+    } else if (arg === "--baseline") {
+      const value = args[++index];
+      if (!value) throw new Error("--baseline requires a path.");
+      options.baseline = value;
     } else if (arg === "--fail-on") {
       const value = args[++index];
       if (value !== "error" && value !== "warning" && value !== "note" && value !== "none") throw new Error("--fail-on must be error, warning, note, or none.");
