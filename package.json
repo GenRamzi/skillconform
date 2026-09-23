@@ -1,7 +1,7 @@
 {
   "name": "skillconform",
-  "version": "0.2.0",
-  "description": "CI-native conformance, capability inventory, security review, and regression testing for Agent Skills.",
+  "version": "0.3.0",
+  "description": "CI-native conformance, capability inventory, cross-agent compatibility, security review, and regression testing for Agent Skills.",
   "type": "module",
   "bin": {
     "skillconform": "dist/src/cli.js"
@@ -34,6 +34,8 @@
     "skill-linter",
     "claude-code",
     "codex",
+    "gemini-cli",
+    "cross-agent",
     "security",
     "sarif"
   ],
