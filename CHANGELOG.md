@@ -4,6 +4,21 @@ All notable changes follow the principles of Keep a Changelog and Semantic Versi
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-23
+
+### Added
+
+- Deterministic capability inventory for Agent Skills, including declared tools, local references, bundled scripts, network hosts, and portability signals.
+- Versioned cross-agent compatibility profiles and matrix output for Agent Skills, Claude, OpenAI, and Gemini host constraints.
+- Expanded regression-policy coverage, compatibility reporting, and community issue templates for reproducible findings.
+- Project and launch documentation for early adopters, integrations, and evidence-driven contributions.
+
+### Changed
+
+- Broaden SkillConform from format/security linting into a CI-native conformance, capability, compatibility, and regression toolkit.
+- Strengthen CI coverage across Node.js 20, 22, and 24 with SARIF smoke testing and package dry-runs.
+- Harden release automation around npm trusted publishing and explicit release gates.
+
 ## [0.1.1] - 2026-08-04
 
 ### Fixed

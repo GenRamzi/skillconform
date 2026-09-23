@@ -3,6 +3,8 @@ name: Release SkillConform
 on:
   push:
     tags: ["v*"]
+  issues:
+    types: [opened]
   workflow_dispatch:
     inputs:
       version:
@@ -20,6 +22,9 @@ concurrency:
 
 jobs:
   publish:
+    if: >-
+      github.event_name != 'issues' ||
+      (github.actor == 'GenRamzi' && github.event.issue.title == 'release: skillconform 0.3.0')
     name: Publish version and create release
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +39,7 @@ jobs:
           package-manager-cache: false
 
       - name: Use an npm CLI with trusted-publishing support
-        run: npm install --global "npm@^11.15.0"
+        run: npm install --global "npm@^11.5.1"
 
       - name: Install dependencies
         run: npm ci
@@ -61,7 +66,12 @@ jobs:
           NODE
 
           package_version="$(node -p "require('./package.json').version")"
-          if [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
+          if [[ "${GITHUB_EVENT_NAME:-}" == "issues" ]]; then
+            if [[ "${GITHUB_ACTOR:-}" != "GenRamzi" || "${package_version}" != "0.3.0" ]]; then
+              echo "Issue-triggered release is restricted to GenRamzi and package version 0.3.0" >&2
+              exit 1
+            fi
+          elif [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
             expected="v${package_version}"
             if [[ "$GITHUB_REF_NAME" != "$expected" ]]; then
               echo "Tag/version mismatch: tag=$GITHUB_REF_NAME package=$package_version" >&2
