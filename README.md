@@ -10,7 +10,7 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-compatible-6D5EF5" alt="Agent Skills compatible"></a>
 </p>
 
-**SkillConform is an open-source conformance, security, and regression-testing toolkit for Agent Skills.** It catches broken metadata, unsafe instructions, missing resources, embedded secrets, broad tool grants, and policy regressions before a skill reaches an agent.
+**SkillConform is the open-source CI and test suite for Agent Skills: conformance, capability inventory, deterministic security review, and regression testing.** It catches broken metadata, unsafe instructions, missing resources, embedded secrets, broad tool grants, and policy regressions before a skill reaches an agent.
 
 Agent Skills are portable folders built around `SKILL.md`. The reference validator checks the core format; SkillConform adds a complementary quality layer for security review, workspace scanning, policy tests, CI, JSON, and SARIF.
 
@@ -36,6 +36,15 @@ npx skillconform audit ./skills --format json -o skillconform.json
 npx skillconform audit ./skills --format sarif -o skillconform.sarif
 ```
 
+Inventory the capability surface before a skill is installed or published:
+
+```bash
+npx skillconform inventory ./skills
+npx skillconform inventory ./skills --format json -o capabilities.json
+```
+
+The versioned `skillconform.capabilities/v1` document records declared tools, local references, bundled scripts, detected network hosts, shell/network signals, and portability notes. It is evidence for review and CI policy—not a claim that a skill is safe or compatible with every agent.
+
 For a guided walkthrough, follow the [five-minute demo](docs/quick-demo.md).
 
 To run from source:
@@ -54,6 +63,7 @@ node dist/src/cli.js audit ./skills --fail-on warning
 |---|---|
 | `check [path]` | Validate Agent Skills structure, metadata, naming, size, and references. |
 | `audit [path]` | Run conformance checks plus deterministic security rules. |
+| `inventory [path]` | Produce a deterministic capability/portability inventory. |
 | `test [file]` | Execute regression expectations from `skillconform.yaml`. |
 | `init [file]` | Create a starter policy-test configuration. |
 
@@ -157,7 +167,7 @@ process.stdout.write(renderReport(result, "json"));
 - **CI-native:** reports work in terminals, scripts, and SARIF consumers.
 - **Least privilege:** security rules favor explicit tools, paths, and network requirements.
 
-Read [the architecture](docs/architecture.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
+Read [the architecture](docs/architecture.md), [SkillConform 2.0 direction](docs/skillconform-2.md), [roadmap](ROADMAP.md), and [contribution guide](CONTRIBUTING.md) before proposing larger changes.
 
 ## Community and launch resources
 
