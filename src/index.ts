@@ -2,6 +2,7 @@ export { buildCompatibilityMatrix, getCompatibilityProfiles, renderCompatibility
 export { parseSkill } from "./frontmatter.js";
 export { buildCapabilityInventory, renderCapabilityInventory } from "./inventory.js";
 export { runPolicyTests } from "./policy-tests.js";
+export { compareSkillTargets, renderRegressionReport, shouldFailRegression } from "./regression.js";
 export { renderReport, shouldFail } from "./reporters.js";
 export { discoverSkillFiles, scanTarget } from "./scanner.js";
 export type {
@@ -16,6 +17,10 @@ export type {
   ParsedSkill,
   PolicyTestConfig,
   PolicyTestResult,
+  RegressionChange,
+  RegressionReport,
+  RegressionSkillSummary,
+  RegressionSummary,
   ScanMode,
   ScanResult,
   Severity,
