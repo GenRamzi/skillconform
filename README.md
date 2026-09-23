@@ -187,9 +187,13 @@ Read [the architecture](docs/architecture.md), [cross-agent compatibility profil
 
 ## Ecosystem, adoption, and partnerships
 
-SkillConform is part of a two-project open-source stack. [Creative Agent Skills](https://github.com/GenRamzi/creative-agent-skills) provides reusable creative-production skills and audits its `skills/` directory with SkillConform in CI. This creates a public, reproducible integration rather than a standalone demo.
+SkillConform is the primary conformance layer in a small open-source reliability toolchain maintained by GenRamzi:
 
-For the problem statement, target users, differentiators, measurable adoption milestones, partnership paths, and due-diligence links, read the [project brief](docs/project-brief.md).
+- [Creative Agent Skills](https://github.com/GenRamzi/creative-agent-skills) is a self-owned public integration that audits its `skills/` directory with SkillConform in CI.
+- [ArgWitness](https://github.com/GenRamzi/argwitness) is an early alpha for producing concrete old-valid/new-invalid counterexamples when MCP, OpenAI, or Anthropic tool schemas change.
+- [AgentProof](https://github.com/GenRamzi/AgentProof) is an experimental independent-verification project for test, CI, and regression claims.
+
+These relationships describe architecture and maintenance scope; self-owned integrations are **not** counted as independent adoption. For the problem statement, target users, differentiators, measurable adoption milestones, partnership paths, and due-diligence links, read the [project brief](docs/project-brief.md).
 
 The highest-value contributions now are independent integrations, minimized false-positive fixtures, missing-rule reports, compatibility tests, and public case studies.
 
