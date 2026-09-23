@@ -1,5 +1,5 @@
 name: SkillConform
-description: Validate and security-audit Agent Skills in GitHub Actions.
+description: Validate, inventory, and security-audit Agent Skills in GitHub Actions.
 author: Ramzi Sultan
 branding:
   icon: check-circle
@@ -10,7 +10,7 @@ inputs:
     required: false
     default: .
   mode:
-    description: Scan mode, either check or audit.
+    description: Mode: check, audit, or inventory.
     required: false
     default: audit
   fail-on:
@@ -45,8 +45,12 @@ runs:
         SKILLCONFORM_FORMAT: ${{ inputs.format }}
         SKILLCONFORM_OUTPUT: ${{ inputs.output }}
       run: |
-        case "$SKILLCONFORM_MODE" in check|audit) ;; *) echo "mode must be check or audit" >&2; exit 2 ;; esac
+        case "$SKILLCONFORM_MODE" in check|audit|inventory) ;; *) echo "mode must be check, audit, or inventory" >&2; exit 2 ;; esac
         case "$SKILLCONFORM_FORMAT" in pretty|json|sarif) ;; *) echo "format must be pretty, json, or sarif" >&2; exit 2 ;; esac
+        if [[ "$SKILLCONFORM_MODE" == "inventory" && "$SKILLCONFORM_FORMAT" == "sarif" ]]; then
+          echo "inventory mode supports pretty or json format" >&2
+          exit 2
+        fi
         case "$SKILLCONFORM_FAIL_ON" in error|warning|note|none) ;; *) echo "fail-on has an invalid value" >&2; exit 2 ;; esac
 
         args=("$SKILLCONFORM_MODE" "$GITHUB_WORKSPACE/$SKILLCONFORM_TARGET" --format "$SKILLCONFORM_FORMAT" --fail-on "$SKILLCONFORM_FAIL_ON")
