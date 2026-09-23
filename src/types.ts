@@ -100,9 +100,43 @@ export interface CompatibilityMatrix {
   skills: SkillCompatibilityResult[];
 }
 
+export interface RegressionChange {
+  code: string;
+  severity: Severity;
+  skill: string;
+  message: string;
+  before?: string;
+  after?: string;
+}
+
+export interface RegressionSkillSummary {
+  skill: string;
+  baselinePresent: boolean;
+  candidatePresent: boolean;
+  changeCount: number;
+}
+
+export interface RegressionSummary {
+  errors: number;
+  warnings: number;
+  notes: number;
+  resolvedFindings: number;
+  changedSkills: number;
+}
+
+export interface RegressionReport {
+  schemaVersion: "skillconform.regression/v1";
+  baseline: string;
+  candidate: string;
+  skills: RegressionSkillSummary[];
+  changes: RegressionChange[];
+  summary: RegressionSummary;
+}
+
 export interface CliOptions {
   format: OutputFormat;
   output?: string;
+  baseline?: string;
   failOn: Severity | "none";
   quiet: boolean;
 }
