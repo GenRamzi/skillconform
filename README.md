@@ -168,7 +168,7 @@ jobs:
           fail-on: warning
 ```
 
-Pin the action to a version tag or immutable commit SHA in maintained repositories.
+Pin the action to a version tag or immutable commit SHA in maintained repositories. Release automation uses npm Trusted Publishing; maintainers should review [the release setup](docs/release.md) before publishing a new version.
 
 ## Library API
 
